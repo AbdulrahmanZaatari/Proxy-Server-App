@@ -1,0 +1,8 @@
+Flask==2.0.3
+sqlite3==3.37.2
+requests==2.27.1
+logging==0.5.1.2
+threading==1.0.0
+select==1.2.3
+python-dateutil==2.8.2
+Werkzeug==2.0.3

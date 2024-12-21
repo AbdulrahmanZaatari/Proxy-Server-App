@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Interface</title>
+    <!-- Include Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Rubik', sans-serif;
+            background: url('../static/computerNetwork.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background-color: rgba(198, 212, 202, 0.4);
+            border-radius: 15px;
+            padding: 40px;
+            width: 600px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .card h1 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #08325e;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card li {
+            margin-bottom: 20px;
+        }
+
+        .card a {
+            display: block;
+            text-decoration: none;
+            box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.6);
+            background-color: #0056b3;
+            color: #eaecee;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card a:hover {
+            background-color: #062c54;
+            color: white;
+        }
+
+      
+
+        .connections {
+            color:rgb(18, 13, 173);
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .cache-status {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #08325e;
+        }
+
+        .cache-status a {
+            color: white;  /* Make the link color white */
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Button Style Consistency */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+        }
+
+        .btn-clear-cache {
+            background-color: #0056b3;  /* Blue color */
+            color: white;  /* White text */
+            font-weight: bold;
+            font-size: 20px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .btn-clear-cache:hover {
+            background-color: #062c54;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 >Admin Interface</h1>
+        <div class="connections">
+            Active Connections: <span id="active-connections">0</span>
+        </div>
+        <div class="cache-status">
+            <a href="{{ url_for('cache') }}">View Cache</a>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('blacklist') }}">Manage Blacklist</a></li>
+            <li><a href="{{ url_for('whitelist') }}">Manage Whitelist</a></li>
+            <li><a href="{{ url_for('logs') }}">View Logs</a></li>
+            <li><a href="{{ url_for('admin_logout') }}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Active Connections Script -->
+    <script>
+        async function updateActiveConnections() {
+            try {
+                const response = await fetch("/active_connections");
+                const data = await response.json();
+                document.getElementById("active-connections").textContent = data.active_connections;
+            } catch (error) {
+                console.error("Error fetching active connections:", error);
+            }
+        }
+    
+        // Fetch and update active connections every 2 mseconds
+        setInterval(updateActiveConnections, 1000);
+        updateActiveConnections();  // Initial call to populate on page load
+    </script>
+    
+</body>
+</html>
